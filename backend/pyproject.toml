@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "moodle-ai-pilot"
+version = "1.0.0"
+description = "Autonomous Multimodal AI Assistant & Evaluation Framework for Moodle LMS"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [
+    { name = "Moodle AI Pilot Contributors" }
+]
+dependencies = [
+    "faster-whisper>=1.0.0",
+    "numpy>=1.24.0",
+]
+
+[project.scripts]
+moodle-pilot = "backend.bridge:run_server"
