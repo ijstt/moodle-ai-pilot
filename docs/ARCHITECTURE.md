@@ -9,11 +9,11 @@ flowchart TD
     subgraph Browser ["Web Browser (Firefox / Chrome)"]
         Userscript["Violentmonkey / Tampermonkey Userscript"]
         DOM["Moodle LMS Page (DOM)"]
-        Userscript -->|Clone & Parse [BLANK_N]| DOM
-        Userscript -->|Inject Keystrokes & Drops| DOM
+        Userscript -->|"Clone and Parse Formulations"| DOM
+        Userscript -->|"Simulate Keystrokes and Drops"| DOM
     end
 
-    subgraph LocalBackend ["Local Python Multimodal Bridge (Port 8765)"]
+    subgraph LocalBackend ["Local Python Multimodal Bridge (:8765)"]
         Bridge["HTTP Server (bridge.py)"]
         Whisper["Audio Engine (faster-whisper + ffmpeg)"]
         Vision["Vision Formatter (vision.py)"]
@@ -22,17 +22,17 @@ flowchart TD
         Bridge --> Vision
     end
 
-    subgraph CloudLocalAI ["AI Reasoning Layer"]
+    subgraph ReasoningLayer ["AI Reasoning Layer"]
         OpenRouter["OpenRouter / OpenAI APIs"]
         Ollama["Local Ollama (Optional)"]
     end
 
-    Userscript -->|POST /solve (JSON + Base64 Media)| Bridge
-    Bridge -->|Structured Prompt + Transcripts| OpenRouter
-    Bridge -->|Structured Prompt + Transcripts| Ollama
-    OpenRouter -->|Clean JSON Answers| Bridge
-    Ollama -->|Clean JSON Answers| Bridge
-    Bridge -->|HTTP 200 JSON| Userscript
+    Userscript -->|"POST /solve with Media Context"| Bridge
+    Bridge -->|"Structured Prompt and Transcripts"| OpenRouter
+    Bridge -->|"Structured Prompt and Transcripts"| Ollama
+    OpenRouter -->|"Structured JSON Answers"| Bridge
+    Ollama -->|"Structured JSON Answers"| Bridge
+    Bridge -->|"HTTP 200 (Answers JSON)"| Userscript
 ```
 
 ## Core Modules

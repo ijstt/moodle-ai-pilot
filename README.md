@@ -45,11 +45,11 @@ sequenceDiagram
     participant STT as faster-whisper (CPU int8)
     participant LLM as Reasoning Engine (LLM / Vision)
 
-    User->>Script: Click [Start Section Autopilot]
+    User->>Script: Click Start Section Autopilot
     Script->>Moodle: Discover & Queue Uncompleted Quizzes in Section
     loop For each Quiz in Queue
         Script->>Moodle: Navigate to Quiz & Initiate Attempt
-        Script->>Script: Clone Formulation & Inject [BLANK_N], [DROP_N]
+        Script->>Script: Clone Formulation & Inject BLANK_N, DROP_N placeholders
         opt Question contains Audio
             Script->>Bridge: Stream Audio Base64
             Bridge->>STT: Decode via ffmpeg PCM Pipe
@@ -61,7 +61,7 @@ sequenceDiagram
         Script->>Bridge: POST /solve (Questions + Media Context)
         Bridge->>LLM: Synthesize Multimodal System Prompt
         LLM-->>Bridge: Structured JSON Answer Mapping
-        Bridge-->>Script: HTTP 200 { status: "ok", answers: {...} }
+        Bridge-->>Script: HTTP 200 (Answers JSON Payload)
         loop For each Question Block
             Script->>Moodle: Smooth Scroll to Question
             alt Text Input (Cloze / Shortanswer)
