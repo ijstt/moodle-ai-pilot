@@ -5,8 +5,10 @@
 **Autonomous Multimodal AI Assistant and Human-Paced Evaluation Framework for Moodle LMS**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![CI](https://github.com/ijstt/moodle-ai-pilot/actions/workflows/ci.yml/badge.svg)](https://github.com/ijstt/moodle-ai-pilot/actions/workflows/ci.yml)
 [![Python 3.10+](https://img.shields.io/badge/Python-3.10+-3776AB.svg?logo=python&logoColor=white)](https://python.org)
 [![Architecture: Two-Tier](https://img.shields.io/badge/Architecture-Userscript%20%2B%20Local%20Daemon-2ea44f)](docs/ARCHITECTURE.md)
+[![Docker: Ready](https://img.shields.io/badge/Docker-Ready-2496ED?logo=docker&logoColor=white)](Dockerfile)
 [![STT: faster-whisper](https://img.shields.io/badge/STT-faster--whisper%20(int8)-orange)](https://github.com/SYSTRAN/faster-whisper)
 [![Vision: Multimodal](https://img.shields.io/badge/Vision-Multimodal%20VL-8a2be2)](backend/vision.py)
 [![Platform: Linux | macOS | Windows](https://img.shields.io/badge/Platform-Linux%20%7C%20macOS%20%7C%20Windows-lightgrey)](#)
@@ -170,6 +172,16 @@ export OPENAI_API_KEY="sk-proj-..."
 python backend/bridge.py --port 8765
 ```
 
+#### Option D: Containerized via Docker / Docker Compose
+```bash
+# Using Docker directly
+docker build -t moodle-ai-pilot .
+docker run -p 8765:8765 -e OPENROUTER_API_KEY="your-key" moodle-ai-pilot
+
+# Or via Docker Compose
+docker compose up -d
+```
+
 ---
 
 ### Step 2: Install the Browser Userscript
@@ -210,6 +222,19 @@ options:
   --host HOST  Host interface to bind (default: 127.0.0.1)
   --port PORT  Port number to listen on (default: 8765)
 ```
+
+---
+
+## Testing & Continuous Integration
+
+The repository includes a regression test suite covering audio decoders, multimodal payload formatting, and bridge HTTP/CORS mechanics:
+
+```bash
+# Run tests locally
+pytest tests -v
+```
+
+Automated GitHub Actions CI runs on every commit across Python 3.10, 3.11, and 3.12 matrices.
 
 ---
 
